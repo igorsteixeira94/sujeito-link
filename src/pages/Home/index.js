@@ -1,27 +1,42 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { Text, SafeAreaView, Image, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Text, Modal, Image, View, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback,Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import Menu from '../../components/Menu';
 import StatusBarPage from '../../components/StatusBarPage';
 import { Feather } from '@expo/vector-icons';
+import { useState } from 'react';
+import { useCallback } from 'react';
+import ModalLink from '../../components/ModalLink';
 // import { Container } from './styles';
 
 const Home = () => {
+  const [input,setInput] = useState('');
+  const [modalVisible,setModalVisible] = useState(false);
+
+  const handleShortLink = useCallback(()=>{
+    setModalVisible(true);
+  },[input]);
+
   return(
-  <SafeAreaView style={{flex:1}}>
-    <StatusBarPage backgroundColor="#1DDBB9" barStyle="light-content" />
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+      
     <LinearGradient 
     colors={['#1DDBB9','#132742']}
     style={{flex:1,justifyContent:'center'}}
     
     >
+    <StatusBarPage backgroundColor="#1DDBB9" barStyle="light-content" />
+    
     <Menu />
+
+    <KeyboardAvoidingView behavior={Platform.OS === "android" ? 'padding' : 'position'} enabled>
     
     <View style={styles.containerImage}>
       <Image style={styles.image} resizeMode="contain" source={require('../../assets/Logo.png')}/>
     </View>
 
     <View style={styles.containerContent}>
+
       <Text style={styles.title}>SujeitoLink</Text>
       <Text style={styles.subTitle}>Cole seu link para encurtar</Text>
 
@@ -34,19 +49,29 @@ const Home = () => {
         style={styles.input} 
         placeholder="Cole seu link aqui..." 
         placeholderTextColor="white"
-
+        autoCapitalize={false}
+        autoCorrect={false}
+        value={input}
+        onChangeText={setInput}
         />
+        
       </View>
 
-      <TouchableOpacity style={styles.btnLink} >
+      <TouchableOpacity style={styles.btnLink} onPress={handleShortLink}>
         <Text style={styles.btnTitle}>Gerar Link</Text>
       </TouchableOpacity>
     </View>
+    </KeyboardAvoidingView>
 
+    <Modal visible={modalVisible} transparent animationType="slide">
+      <ModalLink setVisible={setModalVisible} />
+    </Modal>
 
     </LinearGradient>
+
     
-  </SafeAreaView>);
+    </TouchableWithoutFeedback>
+  );
 };
 
 const styles = StyleSheet.create({

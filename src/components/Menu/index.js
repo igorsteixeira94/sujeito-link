@@ -1,20 +1,51 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity,View,Dimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native"
 
-const Menu = () => {
+const Menu = ({
+  leftIcon = "menu", 
+  leftIconColor="#fff", 
+  leftIconPress, 
+  rightIcon,
+  rightIconColor,
+  rightIconPress,
+  stylesContainer,
+}) => {
   
   const styles = styleSheet();
 
   const navigation = useNavigation();
-  
+
+  const {width} = Dimensions.get('screen')
+
+    
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={()=>{navigation.openDrawer()}}>
-        <Feather name="menu" size={30} color="#FFF" />
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={[styles.container,stylesContainer]}>
+
+      <View style={{flexDirection:'row',justifyContent:'space-between',width:width*0.90}}>
+      
+        {leftIcon && (
+       
+        <TouchableOpacity onPress={ leftIcon === 'menu' ? ()=>{navigation.openDrawer()}: leftIconPress}>
+         
+          <Feather name={leftIcon} size={30} color={leftIconColor} />
+       
+        </TouchableOpacity>)
+        }
+
+       {rightIcon && (
+       
+       <TouchableOpacity onPress={()=>{rightIconPress && rightIconPress()}}>
+       
+         <Feather name={rightIcon} size={30} color={rightIconColor} />
+       
+        </TouchableOpacity>
+       )}
+
+      </View>
+
+    </SafeAreaView>
   )
 };
 
