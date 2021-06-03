@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {Feather} from '@expo/vector-icons';
 
 
-const CardLink = ({link,leftIcon,rightIcon, onPressCard,stylesContainer}) => {
+const CardLink = ({shortLink,leftIcon,rightIcon, onPressCard,stylesContainer}) => {
   return (
     <TouchableOpacity 
       activeOpacity={0.9} 
@@ -15,7 +15,7 @@ const CardLink = ({link,leftIcon,rightIcon, onPressCard,stylesContainer}) => {
           <Feather name={leftIcon} size={25} color="#fff" />
         </View>
       )}
-      <Text numberOfLines={1} style={styles.textLink}>{link}</Text>
+      <Text numberOfLines={1} style={styles.textLink}>{shortLink}</Text>
       {rightIcon && (
         <View>
           <Feather name={rightIcon} size={25} color="#fff" />

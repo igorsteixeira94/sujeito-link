@@ -16,7 +16,7 @@ const MyLinks = () => {
       <FlatList 
         data={[{id:1, link:'test.com'},{id:2, link:'test.com'}]}
         keyExtractor={(item)=>{String(item.id)}}
-        renderItem={({item})=><CardLink stylesContainer={styles.cardLink} link={item.link} leftIcon="link" />}
+        renderItem={({item})=><CardLink stylesContainer={styles.cardLink} shortLink={item.link} leftIcon="link" />}
         contentContainerStyle={{padding:15}}
         ItemSeparatorComponent={()=><View style={styles.itemSeparator}/>}
         showsVerticalScrollIndicator={false}

@@ -8,18 +8,18 @@ import { useCallback } from 'react';
 
 // import { Container } from './styles';
 
-const ModalLink = ({setVisible}) => {
+const ModalLink = ({setVisible,shortLinkData}) => {
  
   const copyLink = useCallback(()=>{
 
-    Clipboard.setString("https://bit.ly/3mJxeUq");
+    Clipboard.setString(shortLinkData.link);
 
   },[]);
 
   const handleShare = useCallback(()=>{
     try {
       const result = Share.share({
-        message:"https://bit.ly/3mJxeUq"
+        message:shortLinkData.link
       })
     } catch (error) {
       
@@ -51,9 +51,9 @@ const ModalLink = ({setVisible}) => {
         <View style={styles.containerContent}>
 
           <Text style={styles.title}>Link encurtado:</Text>
-          <Text numberOfLines={1} style={styles.longUrl}>Link encurtado:</Text>
+          <Text numberOfLines={1} style={styles.longUrl}>{shortLinkData.long_url}</Text>
           
-          <CardLink link="https://bit.ly/3mJxeUq" rightIcon="copy" onPressCard={copyLink}/>
+          <CardLink shortLink={shortLinkData.link }rightIcon="copy" onPressCard={copyLink}/>
        
         </View>
 
@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
     color:'#a7a7a7',
     marginBottom:30,
   }
-})
+});
 
 export default ModalLink;

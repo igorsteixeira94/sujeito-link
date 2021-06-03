@@ -7,14 +7,34 @@ import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import ModalLink from '../../components/ModalLink';
+import ShortLinkServices from '../../services/ShortLinkServices';
 // import { Container } from './styles';
 
 const Home = () => {
   const [input,setInput] = useState('');
+  const [shortLinkData,setShortLinkData] = useState('');
   const [modalVisible,setModalVisible] = useState(false);
+  const [loading,setLoading] = useState(false);
 
-  const handleShortLink = useCallback(()=>{
-    setModalVisible(true);
+  const handleShortLink = useCallback(async ()=>{
+    setLoading(true);
+    try {
+
+      const result = await ShortLinkServices.createShortLink(input);
+      console.log(result);
+
+      setShortLinkData(result);
+      setModalVisible(true);
+      
+      
+    } catch (error) {
+      console.error(error);
+      setInput('');
+    }finally{
+      Keyboard.dismiss();
+      setLoading(false);
+    }
+    //setModalVisible(true);
   },[input]);
 
   return(
@@ -64,7 +84,7 @@ const Home = () => {
     </KeyboardAvoidingView>
 
     <Modal visible={modalVisible} transparent animationType="slide">
-      <ModalLink setVisible={setModalVisible} />
+      <ModalLink setVisible={setModalVisible} shortLinkData={shortLinkData} />
     </Modal>
 
     </LinearGradient>
