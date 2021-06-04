@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import ModalLink from '../../components/ModalLink';
 import ShortLinkServices from '../../services/ShortLinkServices';
-// import { Container } from './styles';
+import ShortLinkStorage from '../../utils/ShortLinkStorage';
 
 const Home = () => {
   const [input,setInput] = useState('');
@@ -20,12 +20,13 @@ const Home = () => {
     setLoading(true);
     try {
 
-      const result = await ShortLinkServices.createShortLink(input);
-      console.log(result);
-
-      setShortLinkData(result);
-      setModalVisible(true);
+     const newLinkShort = await ShortLinkServices.createShortLink(input);
       
+      setShortLinkData(newLinkShort);
+      setModalVisible(true);
+
+      await ShortLinkStorage.saveLink(newLinkShort);
+          
       
     } catch (error) {
       console.error(error);
@@ -69,7 +70,7 @@ const Home = () => {
         style={styles.input} 
         placeholder="Cole seu link aqui..." 
         placeholderTextColor="white"
-        autoCapitalize={false}
+        autoCapitalize="none"
         autoCorrect={false}
         value={input}
         onChangeText={setInput}

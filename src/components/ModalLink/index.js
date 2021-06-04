@@ -12,14 +12,14 @@ const ModalLink = ({setVisible,shortLinkData}) => {
  
   const copyLink = useCallback(()=>{
 
-    Clipboard.setString(shortLinkData.link);
+    Clipboard.setString(shortLinkData?.link);
 
   },[]);
 
   const handleShare = useCallback(()=>{
     try {
       const result = Share.share({
-        message:shortLinkData.link
+        message:shortLinkData?.link
       })
     } catch (error) {
       
@@ -51,9 +51,9 @@ const ModalLink = ({setVisible,shortLinkData}) => {
         <View style={styles.containerContent}>
 
           <Text style={styles.title}>Link encurtado:</Text>
-          <Text numberOfLines={1} style={styles.longUrl}>{shortLinkData.long_url}</Text>
+          <Text numberOfLines={1} style={styles.longUrl}>{shortLinkData?.long_url}</Text>
           
-          <CardLink shortLink={shortLinkData.link }rightIcon="copy" onPressCard={copyLink}/>
+          <CardLink link={shortLinkData?.link }rightIcon="copy" onPressCard={copyLink}/>
        
         </View>
 
