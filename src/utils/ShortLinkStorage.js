@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import ShortLinkKey from '../config/ShortLinkKeyStorage';
+
 export default {
 
   /**
@@ -12,7 +13,6 @@ export default {
 
     const linksSaved = JSON.parse(myLinks) || [];
 
-    console.log('Recuperando os Links',linksSaved)
     return linksSaved;
 
   },
@@ -29,30 +29,29 @@ export default {
     const hasLink = linksSaved.some(link => link.id === newLink.id);
 
     if(hasLink){
+
       throw new Error('O link já existe!');
     }
 
     linksSaved.push(newLink);
     
     await AsyncStorage.setItem(ShortLinkKey,JSON.stringify(linksSaved));
-
-    console.log('Salvando Link', linksSaved);
     
 
   },
 
+    /**
+   * 
+   * @returns {Array} links
+   */
   async deleteLink(links, id){
 
     const newLinksArray = links.filter(link => link.id !== id);
 
     await AsyncStorage.setItem(ShortLinkKey,JSON.stringify(newLinksArray));
-
-    console.log('Link deletado!', newLinksArray);
-
+    
     return newLinksArray;
-
-    
-    
+ 
   }
 
 

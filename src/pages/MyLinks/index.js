@@ -64,7 +64,7 @@ const MyLinks = () => {
     loadData()
   },[isFocused]);
   return(
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBarPage backgroundColor="#132742" barStyle="light-content" />
       <Menu />
       <Text style={styles.title}>MeusLinks</Text>
@@ -90,7 +90,7 @@ const MyLinks = () => {
       <Modal visible={modalVisible} transparent animationType="slide">  
         <ModalLink setVisible={setModalVisible} shortLinkData={shortLinkData} />
       </Modal>
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#132742',
   },
   title:{
-    marginTop:'20%',
+    marginTop:'30%',
     marginLeft:20,
     fontSize:33,
     fontWeight:'bold',

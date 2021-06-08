@@ -34,6 +34,7 @@ const Home = () => {
     }finally{
       Keyboard.dismiss();
       setLoading(false);
+      setInput('');
     }
     //setModalVisible(true);
   },[input]);
